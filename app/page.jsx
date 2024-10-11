@@ -1,17 +1,20 @@
 import { PrismaClient } from '@prisma/client';
 import Image from 'next/image';
+import addTodo from './actions/addTodo';
+import deleteTodo from './actions/deleteTodo';
 
-const prisma = PrismaClient();
+const prisma = new PrismaClient();
 export default async function Home() {
-  const todos = await prisma.todo.findmany();
+  const todos = await prisma.todo.findMany();
 
   return (
     <main className="container mx-auto px-4">
       <h1 className="text-2xl font-bold text-center my-6">Todo List</h1>
-      <form action={'addTodo'} className="mb-4">
+      <form action={addTodo} className="mb-4">
         <input
           name="title"
           type="text"
+          id="title"
           placeholder="Add a new todo"
           className="shadow appearance-none border rounded py-2 px-3 text-grey-darker mr-2 text-black"
         />
@@ -29,7 +32,7 @@ export default async function Home() {
             className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded shadow my-2"
           >
             <span className="text-lg text-black">{todo.title}</span>
-            <form action={'deleteTodo'}>
+            <form action={deleteTodo}>
               <input type="hidden" name="id" id={todo.id} value={todo.id} />
               <button
                 type="submit"
