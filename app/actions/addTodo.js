@@ -13,8 +13,7 @@ export default async function addTodo(formData) {
       },
     });
     revalidatePath('/');
-    // document.getElementById('title').value = '';
-    // return { message: 'Todo added successfully' };
+    document.getElementById('title').value = '';
   } catch (e) {
     console.error(e);
   }
